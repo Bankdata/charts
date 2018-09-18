@@ -1,2 +1,3 @@
-# charts
-Small collection of Helm charts
+# Charts
+
+Repository containing a small set of Helm charts.
