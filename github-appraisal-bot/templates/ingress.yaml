@@ -19,7 +19,7 @@ spec:
       - backend:
           serviceName: {{ template "fullname" . }}
           servicePort: web
-{{- if .Values.ingress.tls.enable }}
+{{- if .Values.ingress.tls }}
   tls:
   - hosts:
     - {{ .Values.ingress.host | quote }}
