@@ -37,7 +37,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: "{{ .Values.secret.name }}"
-              value: "{{ .Values.secret.webSecret }}"
+              key: "{{ .Values.secret.webSecret }}"
         - name: "APP_ID"
           value: "{{ .Values.appId }}"
         - name: "PRIVATE_PEM"
