@@ -1,0 +1,8 @@
+---
+# Default values
+
+replicaCount: 1
+
+image:
+  repository: appraisal-bot
+  tag: v1.0.0
