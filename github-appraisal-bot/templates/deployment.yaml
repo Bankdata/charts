@@ -30,17 +30,18 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: "/config"
+        - name: secret-volume
+          mountPath: "/secret"
         env:
-        - name: "ACCESS_TOKEN"
-          valueFrom:
-            secretKeyRef:
-              name: "mysecret"
-              value: "xxx"
         - name: "WEB_SECRET"
           valueFrom:
             secretKeyRef:
-              name: "mysecret"
-              value: "xxx"
+              name: "{{ .Values.secret.name }}"
+              value: "{{ .Values.secret.webSecret }}"
+        - name: "APP_ID"
+          value: "{{ .Values.appId }}"
+        - name: "PRIVATE_PEM"
+          value: "/secret/private.pem"
         - name: "CONFIG_FILE"
           value: "/config/config.yaml"
         resources:
@@ -70,3 +71,12 @@ spec:
         - name: config-volume
           configMap:
             name: {{ template "fullname" . }}
+            items:
+            - key: "config"
+              path: "config.yaml"
+        - name: secret-volume
+          secret:
+            secretName: "{{ .Values.secret.name }}"
+            items:
+            - key: "{{ .Values.secret.privateKey }}"
+              path: "private.pem"
