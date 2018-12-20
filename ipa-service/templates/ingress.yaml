@@ -7,10 +7,6 @@ metadata:
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- if .Values.ingress.annotations }}
-  annotations:
-{{ toYaml .Values.ingress.annotations | indent 4 }}
-{{- end }}
 spec:
   rules:
   - host: {{ .Values.ingress.host | quote }}
