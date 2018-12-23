@@ -6,3 +6,14 @@ replicaCount: 1
 image:
   repository: ipa-service
   tag: v1.0.0
+
+ingress:
+  host: ipa-service.650b277bd9a54e5cbadc.westeurope.aksapp.io
+  annotations:
+    kubernetes.io/ingress.class: 'addon-http-application-routing'
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Strict-Transport-Security: max-age=31536000";
+      more_set_headers "Access-Control-Allow-Origin: *";
+  tls:
+    enable: true
