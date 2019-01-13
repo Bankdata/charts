@@ -4,8 +4,7 @@
 replicaCount: 1
 
 image:
-  repository: ipa-service
-  tag: v1.0.0
+  pullSecret: regcred
 
 ingress:
   host: ipa-service.650b277bd9a54e5cbadc.westeurope.aksapp.io
