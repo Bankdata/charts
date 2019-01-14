@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.ingress.annotations }}
   annotations:
-{{ toYaml .Valuse.ingress.annotations | indent 4 }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
   rules:
