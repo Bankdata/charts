@@ -26,3 +26,7 @@ spec:
 {{ toYaml .Values.env | indent 12 }}
 {{- end }}
           restartPolicy: OnFailure
+{{- if .Values.image.pullSecret }}
+          imagePullSecrets:
+            - name: {{ .Values.image.pullSecret }}
+{{- end }}
