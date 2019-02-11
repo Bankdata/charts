@@ -20,7 +20,7 @@ spec:
             - /storage
 {{- range .Values.slugs -}}
             - {{ . | quote }}
-{{- end }}}}
+{{- end }}
 {{- if .Values.env }}
             env:
 {{ toYaml .Values.env | indent 12 }}
