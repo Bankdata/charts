@@ -1,0 +1,4 @@
+image:
+  repository: deployment-cleanup
+  tag: latest
+slugs: []
