@@ -18,7 +18,7 @@ spec:
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             args:
             - /storage
-{{- range .Values.slugs }}
+{{- range .Values.slugs -}}
             - {{ . | quote }}
 {{- end }}}}
 {{- if .Values.env }}
