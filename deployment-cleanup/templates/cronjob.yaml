@@ -45,6 +45,7 @@ spec:
           imagePullSecrets:
             - name: {{ .Values.image.pullSecret }}
 {{- end }}
+          volumes:
 {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 10 }}
 {{- end }}
