@@ -25,7 +25,7 @@ spec:
 {{- if .Values.storage.env }}
 {{ toYaml .Values.storage.env | indent 12 }}
 {{- end }}
-          - name: storage-cleanup
+          - name: helm-cleanup
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             args:
             - /helm
