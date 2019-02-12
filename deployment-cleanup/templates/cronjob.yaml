@@ -18,15 +18,33 @@ spec:
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             args:
             - /storage
-{{- range .Values.slugs }}
+{{- range .Values.storage.slugs }}
             - {{ . | quote }}
 {{- end }}
             env:
-{{- if .Values.env }}
-{{ toYaml .Values.env | indent 12 }}
+{{- if .Values.storage.env }}
+{{ toYaml .Values.storage.env | indent 12 }}
+{{- end }}
+          - name: storage-cleanup
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            args:
+            - /helm
+{{- range .Values.helm.slugs }}
+            - {{ . | quote }}
+{{- end }}
+{{- if .Values.helm.env }}
+            env:
+{{ toYaml .Values.helm.env | indent 12 }}
+{{- end }}
+{{- if .Values.helm.extraVolumeMounts }}
+            volumeMounts:
+{{ toYaml .Values.helm.extraVolumeMounts | indent 12 }}
 {{- end }}
           restartPolicy: OnFailure
 {{- if .Values.image.pullSecret }}
           imagePullSecrets:
             - name: {{ .Values.image.pullSecret }}
+{{- end }}
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 10 }}
 {{- end }}
