@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled }}
+{{- if .Capabilities.APIVersions.Has "route.openshift.io/v1" }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ template "microservice.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ template "microservice.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: microservice
+    app.kubernetes.io/part-of: microservice
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    bankdata.dk/service: {{ .Release.Name }}
+  annotations:
+spec:
+  port:
+    targetPort: web
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: {{ .Release.Name }}
+{{- end }}
+{{- end }}

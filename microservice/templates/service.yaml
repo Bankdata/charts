@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app.kubernetes.io/name: {{ template "microservice.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: microservice
+    app.kubernetes.io/part-of: microservice
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    bankdata.dk/service: {{ .Release.Name }}
+spec:
+  selector:
+    bankdata.dk/service: {{ .Release.Name }}
+  ports:
+  - name: web
+    port: 80
+    targetPort: web

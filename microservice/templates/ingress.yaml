@@ -1,0 +1,36 @@
+{{- if .Values.ingress.enabled }}
+{{- if .Values.ingress.hosts }}
+{{- if not (.Capabilities.APIVersions.Has "route.openshift.io/v1") }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "microservice.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ template "microservice.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: microservice
+    app.kubernetes.io/part-of: microservice
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    bankdata.dk/service: {{ .Release.Name }}
+{{- if .Values.ingress.annotations }}
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+  {{- $serviceName := .Release.Name -}}
+  {{- range .Values.ingress.hosts }}
+  - host: {{ .domain }}
+    http:
+      paths:
+      {{- range .paths }}
+      - backend:
+          serviceName: {{ $serviceName }}
+          servicePort: web
+        path: {{ . }}
+      {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

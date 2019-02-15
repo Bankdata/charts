@@ -1,0 +1,14 @@
+# Default values for generic microservice
+
+replicaCount: 2
+
+javaOpts:
+  maxRam: 700m
+
+resources:
+  limits:
+    cpu: 1
+    memory: 768Mi
+  requests:
+    cpu: 10m
+    memory: 400Mi
