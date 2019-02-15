@@ -31,6 +31,20 @@ spec:
         path: {{ . }}
       {{- end }}
   {{- end }}
+{{- if .Values.ingress.tls.enable }}
+  tls:
+{{- $tlsSecret := .Values.ingress.tls.secret -}}
+{{- $root := . -}}
+{{- range .Values.ingress.hosts }}
+  - hosts:
+    - {{ .domain | quote }}
+{{- if $tlsSecret }}
+    secretName: {{ $tlsSecret }}
+{{ else }}
+    secretName: {{ template "microservice.fullname" $root }}
+{{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
