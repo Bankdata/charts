@@ -28,8 +28,8 @@ spec:
         - name: web
           containerPort: 3000
         env:
-{{- if .Values.storage.env }}
-{{ toYaml .Values.storage.env | indent 8 }}
+{{- if .Values.env }}
+{{ toYaml .Values.env | indent 8 }}
 {{- end }}
         resources:
           limits:
