@@ -27,9 +27,6 @@ spec:
         ports:
         - name: web
           containerPort: 80
-        volumeMounts:
-        - name: config-volume
-          mountPath: "{{ .Values.configPath }}"
         resources:
           limits:
             cpu: 100m
@@ -53,7 +50,3 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}
 {{- end }}
-      volumes:
-        - name: config-volume
-          configMap:
-            name: {{ template "spa.fullname" . }}
