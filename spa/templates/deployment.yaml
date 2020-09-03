@@ -7,6 +7,10 @@ metadata:
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     app: {{ template "spa.name" . }}
+{{- if .Values.git }}	
+    git.repo: {{ .Values.git.repo }}	
+    git.branch: {{ .Values.git.branch | replace "/" "__" }}	
+{{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 5
