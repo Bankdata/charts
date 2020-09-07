@@ -1,0 +1,35 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "dc.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    app: {{ template "dc.name" . }}
+spec:
+  schedule: "@hourly"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: helm-cleanup
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+{{- if .Values.helm.env }}
+            env:
+{{ toYaml .Values.helm.env | indent 12 }}
+{{- end }}
+{{- if .Values.helm.extraVolumeMounts }}
+            volumeMounts:
+{{ toYaml .Values.helm.extraVolumeMounts | indent 12 }}
+{{- end }}
+          restartPolicy: OnFailure
+{{- if .Values.image.pullSecret }}
+          imagePullSecrets:
+            - name: {{ .Values.image.pullSecret }}
+{{- end }}
+          volumes:
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 10 }}
+{{- end }}
